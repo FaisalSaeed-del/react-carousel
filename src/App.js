@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Carousel, { CarouselItem } from "./components/Carousel";
+import slide1 from "../src/img/img1.jpg";
+import slide2 from "../src/img/img2.jpg";
+import slide3 from "../src/img/img3.webp";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Carousel>
+        <CarouselItem>
+          <img src={slide1} alt="" width={"100%"} />
+        </CarouselItem>
+        <CarouselItem>
+          <img src={slide2} alt="" width={"100%"} />
+        </CarouselItem>
+        <CarouselItem>
+          <img src={slide3} alt="" width={"100%"} />
+        </CarouselItem>
+        <CarouselItem>
+          <img src={slide3} alt="" width={"100%"} />
+        </CarouselItem>
+        <CarouselItem>
+          <img src={slide3} alt="" width={"100%"} />
+        </CarouselItem>
+        <CarouselItem>
+          <img src={slide3} alt="" width={"100%"} />
+        </CarouselItem>
+      </Carousel>
     </div>
   );
 }
