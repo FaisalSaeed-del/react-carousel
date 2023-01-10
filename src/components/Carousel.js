@@ -14,6 +14,12 @@ export const CarouselItem = ({ children, width }) => {
 const Carousel = ({ children }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const setting = {
+    dragSpeed: 1.25,
+    itemWidth: 300,
+    itemHeight: 180,
+    itemSideOffsets: 15,
+  };
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
@@ -48,6 +54,7 @@ const Carousel = ({ children }) => {
   return (
     <div
       {...handlers}
+      {...setting}
       className="carousel"
       onMosueEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
