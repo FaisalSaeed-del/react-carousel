@@ -12,7 +12,7 @@ function App() {
       <Carousel _data={items}>
         {items.map((i, _i) => (
           <CarouselItem>
-            <img src={i} alt="" width={"100%"} />
+            <img src={i} alt="" key={i} width={"100%"} />
           </CarouselItem>
         ))}
       </Carousel>

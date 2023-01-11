@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
+import { useDrag } from "react-use-gesture";
 
 export const CarouselItem = ({ children, width }) => {
   return (
@@ -14,6 +15,8 @@ export const CarouselItem = ({ children, width }) => {
 const Carousel = ({ children }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [dragX, setDragX] = useState(0);
+  const [totalDrag, setTotalDrag] = useState(0);
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
@@ -22,6 +25,8 @@ const Carousel = ({ children }) => {
       newIndex = 0;
     }
     setActiveIndex(newIndex);
+    setTotalDrag(0);
+    setDragX(0);
   };
 
   // set interval with useEffect
@@ -31,13 +36,35 @@ const Carousel = ({ children }) => {
       if (!paused) {
         updateIndex(activeIndex + 1);
       }
-    }, 5000);
+    }, 1000);
     return () => {
       if (interval) {
         clearInterval(interval);
       }
     };
   });
+  // use dragable
+  const bind = useDrag(
+    ({ offset: [x] }) => {
+      if (x !== 0) {
+        setDragX((prevX) => prevX + x);
+        setTotalDrag((prevTotal) => prevTotal + x);
+      }
+    },
+    {
+      drag: ({ offset: [x] }) => setDragX(x),
+      end: ({ offset: [x], velocity }) => {
+        const width = document.querySelector(".carousel-item").offsetWidth;
+        if (totalDrag > width / 2 || velocity > 0.25) {
+          updateIndex(activeIndex + 1);
+        } else if (totalDrag < -width / 2 || velocity < -0.25) {
+          updateIndex(activeIndex - 1);
+        } else {
+          updateIndex(activeIndex);
+        }
+      },
+    }
+  );
 
   //   use swipeable
   const handlers = useSwipeable({
@@ -47,15 +74,18 @@ const Carousel = ({ children }) => {
 
   return (
     <div
+      {...bind()}
       {...handlers}
       className="carousel"
-      onMosueEnter={() => setPaused(true)}
+      onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
       <div
         className="inner carousel-content"
         // activeIndex=widht is adjustable we can change it
-        style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        style={{
+          transform: `translateX(${dragX - activeIndex * 100}%)`,
+        }}
       >
         {React.Children.map(children, (child, index) => {
           // widht is adjustable we can change it
