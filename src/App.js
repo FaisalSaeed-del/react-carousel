@@ -5,27 +5,16 @@ import slide2 from "../src/img/img2.jpg";
 import slide3 from "../src/img/img3.webp";
 
 function App() {
+  const items = [slide1, slide2, slide3, slide1, slide3, slide3, slide3];
+
   return (
     <div className="App">
-      <Carousel>
-        <CarouselItem>
-          <img src={slide1} alt="" width={"100%"} />
-        </CarouselItem>
-        <CarouselItem>
-          <img src={slide2} alt="" width={"100%"} />
-        </CarouselItem>
-        <CarouselItem>
-          <img src={slide3} alt="" width={"100%"} />
-        </CarouselItem>
-        <CarouselItem>
-          <img src={slide3} alt="" width={"100%"} />
-        </CarouselItem>
-        <CarouselItem>
-          <img src={slide3} alt="" width={"100%"} />
-        </CarouselItem>
-        <CarouselItem>
-          <img src={slide3} alt="" width={"100%"} />
-        </CarouselItem>
+      <Carousel _data={items}>
+        {items.map((i, _i) => (
+          <CarouselItem>
+            <img src={i} alt="" width={"100%"} />
+          </CarouselItem>
+        ))}
       </Carousel>
     </div>
   );
