@@ -24,6 +24,7 @@
 .indicators {
   display: flex;
   justify-content: center;
+  transition: background-color 0.5s ease-in-out;
 }
 
 .indicators > button {
@@ -33,4 +34,8 @@
 .indicators > button.active {
   background-color: dodgerblue;
   color: white;
+}
+
+.carousel .inner {
+  transition: transform 0.5s ease-in-out;
 }
