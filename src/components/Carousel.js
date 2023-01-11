@@ -4,7 +4,7 @@ import { useDrag } from "react-use-gesture";
 
 export const CarouselItem = ({ children, width }) => {
   return (
-    <div className="carousel-item" style={{ width: width }}>
+    <div className="carousel-item active" style={{ width: width }}>
       {children}
     </div>
   );
@@ -29,6 +29,18 @@ const Carousel = ({ children }) => {
     setDragX(0);
   };
 
+  // add zoom effect
+  // const carouselRef = useRef(null);
+  // useEffect(() => {
+  //   const activeSlide = carouselRef.current.querySelector(
+  //     `.carousel-item:nth-child(${activeIndex + 1})`
+  //   );
+  //   const slides = carouselRef.current.querySelectorAll(".carousel-item");
+  //   // Removing class from all slides
+  //   slides.forEach((slide) => slide.classList.remove("zoomed"));
+  //   // Adding class to active slide
+  //   activeSlide.classList.add("zoomed");
+  // }, [activeIndex]);
   // set interval with useEffect
 
   useEffect(() => {
@@ -36,7 +48,7 @@ const Carousel = ({ children }) => {
       if (!paused) {
         updateIndex(activeIndex + 1);
       }
-    }, 5000);
+    }, 3000);
     return () => {
       if (interval) {
         clearInterval(interval);
@@ -79,6 +91,8 @@ const Carousel = ({ children }) => {
       className="carousel"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      // for Zoom effect add carousel
+      // ref={carouselRef}
     >
       <div
         className="inner carousel-content"
